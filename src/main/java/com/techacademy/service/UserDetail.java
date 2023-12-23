@@ -27,43 +27,43 @@ public class UserDetail implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // TODO 自動生成されたメソッド・スタブ
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
         // TODO 自動生成されたメソッド・スタブ
-        return null;
+        return user.getAuthentication().getPassword();
     }
 
     @Override
     public String getUsername() {
         // TODO 自動生成されたメソッド・スタブ
-        return null;
+        return user.getAuthentication().getLoginUser();
     }
 
     @Override
     public boolean isAccountNonExpired() {
         // TODO 自動生成されたメソッド・スタブ
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
         // TODO 自動生成されたメソッド・スタブ
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
         // TODO 自動生成されたメソッド・スタブ
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
         // TODO 自動生成されたメソッド・スタブ
-        return false;
+        return true;
     }
 
 }

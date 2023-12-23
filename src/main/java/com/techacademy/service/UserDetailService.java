@@ -16,21 +16,18 @@ public class UserDetailService implements UserDetailsService {
     private final AuthenticationRepository authenticationRepository;
 
     public UserDetailService(AuthenticationRepository repository) {
-        super();
         this.authenticationRepository = repository;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Authentication> authentication = authenticationRepository.findById(username);
 
-        if(!authentication.isPresent()) {
+        if (!authentication.isPresent()) {
             throw new UsernameNotFoundException("Exception:Username Not Found");
 
         }
         return new UserDetail(authentication.get().getUser());
     }
-
 
 }
