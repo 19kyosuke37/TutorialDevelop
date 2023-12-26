@@ -60,4 +60,10 @@ class UserControllerTest {
         assertEquals(user.getId(), 1);
         assertEquals(user.getName(), "キラメキ太郎");
     }
+    
+    
+    
+    
+    
+    
 }

@@ -9,7 +9,9 @@
     <h1>User情報管理システム</h1>
     <h2>User登録</h2>
     <form method="post" th:action="@{/user/register}" th:object="${user}">
-        <label for="name">名前</label>
+        <label for="name">名前</label>   <!--th:object="${○○}" は○○をModelに登録されたキー名を指定しています。
+                                            これにより th:field では *{name} のようにキーを省略して記述できます。
+                                           th:object を使用しない場合は th:field=${user.name} と記述します。-->
         <input type="text" th:field="*{name}" th:errorclass="err">
         <span th:errors="*{name}" class="err"></span>
         <br>
@@ -19,6 +21,9 @@
             <option value="" th:text="選択してください">
             <option th:each="item:${T(com.techacademy.entity.User.Gender).values()}"
                     th:value="${item}" th:text="${item}" th:selected="*{gender} == ${item}"></option>
+                    <!---T(com.techacademy.entity.User.Gender)は、
+                    ThymeleafでJavaのStatic変数やStaticメソッドを呼び出す構文です。
+                    実際にジェンダーはentiryクラスでStaticなenumとされているフィールド-->
         </select>
         <span th:errors="*{gender}" class="err"></span>
 

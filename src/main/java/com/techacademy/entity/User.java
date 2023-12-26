@@ -31,7 +31,8 @@ public class User {
 
     @Id //主キー
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //主キーの値を一意（かぶりなし）に自動生成するアノテーション
+    //主キーの値を一意（かぶりなし）に自動生成するアノテーション,
+    //だから、このアノテーションがあれば自動で上から順番振ってくれる
     private Integer id;
 
 
