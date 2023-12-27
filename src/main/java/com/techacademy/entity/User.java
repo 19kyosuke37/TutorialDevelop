@@ -20,59 +20,51 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-@Data  //「getter/setter、toString、hashCode、equals」のメソッドを生成
+@Data // 「getter/setter、toString、hashCode、equals」のメソッドを生成
 @Entity
-@Table(name ="user") //MySQlのエンティティが紐づくテーブルの指定
+@Table(name = "user") // MySQlのエンティティが紐づくテーブルの指定
 public class User {
 
-    public static enum Gender{
-        男性,女性
+    public static enum Gender {
+        男性, 女性
     }
 
-    @Id //主キー
+    @Id // 主キー
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //主キーの値を一意（かぶりなし）に自動生成するアノテーション,
-    //だから、このアノテーションがあれば自動で上から順番振ってくれる
+    // 主キーの値を一意（かぶりなし）に自動生成するアノテーション,
+    // だから、このアノテーションがあれば自動で上から順番振ってくれる
     private Integer id;
 
-
-    @Column(length = 20,nullable = false)
-    @NotEmpty//これはバリデーションといい（Validation）、データやプロセスが特定の規則や条件を満たしているかどうかを検証するプロセスです。
-    @Length(max=20)
+    @Column(length = 20, nullable = false)
+    @NotEmpty // これはバリデーションといい（Validation）、データやプロセスが特定の規則や条件を満たしているかどうかを検証するプロセスです。
+    @Length(max = 20)
     private String name;
 
     @Column(length = 2)
     @Enumerated(EnumType.STRING)
     @NotNull
-    //このアノテーションで該当フィールドがEnum型であることを指定している
+    // このアノテーションで該当フィールドがEnum型であることを指定している
     private Gender gender;
 
     @Min(0)
     @Max(120)
-    private Integer age; //文字列型、配列型以外にはlengthは指定できないから、これはされていない
+    private Integer age; // 文字列型、配列型以外にはlengthは指定できないから、これはされていない
 
     @Column(length = 50)
     @Email
-    @Length(max=50)
+    @Length(max = 50)
     private String email;
 
-    @OneToOne(mappedBy="user")
+    @OneToOne(mappedBy = "user")
     private Authentication authentication;
-
 
     @PreRemove
     @Transactional
     private void preRemove() {
-        if(authentication != null) {
+        if (authentication != null) {
             authentication.setUser(null);
 
         }
     }
-
-
-
-
-
-
 
 }

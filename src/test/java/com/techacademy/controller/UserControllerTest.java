@@ -7,6 +7,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,10 +25,10 @@ import org.springframework.web.context.WebApplicationContext;
 import com.techacademy.entity.User;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc//MockMvc の設定を行なうアノテーション
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
-    private MockMvc mockMvc;
+    private MockMvc mockMvc; //MockMvc はHTTPリクエストを擬似的に再現するクラス
 
     private final WebApplicationContext webApplicationContext;
 
@@ -60,10 +62,45 @@ class UserControllerTest {
         assertEquals(user.getId(), 1);
         assertEquals(user.getName(), "キラメキ太郎");
     }
-    
-    
-    
-    
-    
-    
+
+
+    //以下、課題での追加
+
+    @Test
+    @DisplayName("User情報管理システム")
+    @WithMockUser
+    void testGetList() throws Exception{
+        MvcResult result = mockMvc.perform(get("/user/list"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("userlist"))
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name("user/list"))
+                .andReturn();
+
+
+        List<User> userlist = (List<User>)result.getModelAndView().getModel().get("userlist");
+        for (int i = 0; i<3; i++ ) {
+            User user = userlist.get(i);
+            switch(i) {
+            case 0:
+                assertEquals(user.getId(), 1);
+                assertEquals(user.getName(), "キラメキ太郎");
+                break;
+            case 1:
+                assertEquals(user.getId(), 2);
+                assertEquals(user.getName(), "キラメキ次郎");
+                break;
+            case 2:
+                assertEquals(user.getId(), 3);
+                assertEquals(user.getName(), "キラメキ花子");
+                break;
+            default:
+                break;
+            }
+        }
+
+        int userCount = userlist.size();
+        assertEquals(userCount, 3);
+
+    }
 }

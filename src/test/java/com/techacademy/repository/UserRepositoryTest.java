@@ -11,7 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.techacademy.entity.User;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
+@ExtendWith(SpringExtension.class)//コンストラクタインジェクションを可能にしている
 class UserRepositoryTest {
     private final UserRepository userRepository;
 
